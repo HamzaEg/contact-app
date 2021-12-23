@@ -1,5 +1,10 @@
 import React from "react";
 import PhoneCard from "./PhoneCard";
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import { Link } from 'react-router-dom'
+
 
 const PhoneList = (props) => {
   console.log(props);
@@ -16,7 +21,29 @@ const PhoneList = (props) => {
       />
     );
   });
-  return <div className="ui celled list">{renderPhoneList}</div>;
+  return (
+    <div className="ui celled list">
+     <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          p: 1,
+          m: 1,
+          bgcolor: 'background.paper',
+        }}
+      >
+        <Typography variant="h2" color="initial">Phone List</Typography>
+        <Link to="/add">
+        <Button  variant="contained">
+          Add Phone
+        </Button>
+        </Link>
+      </Box>
+
+    
+      {renderPhoneList}
+    </div>
+    );
 };
 
 export default PhoneList;

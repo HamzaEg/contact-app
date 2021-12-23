@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // import user from '../images/user.png'
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -8,18 +9,19 @@ import ImageIcon from "@mui/icons-material/Image";
 // import WorkIcon from '@mui/icons-material/Work';
 // import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 
-const CardContact = (props) => {
+const CardPhone = (props) => {
   const { id, name, phone } = props.contact;
 
   return (
     <ListItem>
       <ListItemAvatar>
+      <Link to={`/phone/${id}`}>
         <Avatar>
           <ImageIcon />
         </Avatar>
+      </Link>
       </ListItemAvatar>
       <ListItemText primary={name} secondary={phone} />
-      <i className="edit alternate outline icon" style={{color:"blue", marginTop: "7px"}}></i>
        <i
         className="trash alternate outline icon"
         style={{ color: "red", marginTop: "7px" }}
@@ -28,4 +30,4 @@ const CardContact = (props) => {
     </ListItem>
   );
 };
-export default CardContact;
+export default CardPhone;

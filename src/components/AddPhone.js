@@ -14,6 +14,7 @@ class AddPhone extends React.Component {
     }
     this.props.addContactHandler(this.state);
     this.setState({ name: "", phone: "" });
+    this.props.history.push("/");
   };
   render() {
     return (
