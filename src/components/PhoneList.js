@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useRef} from "react";
 import PhoneCard from "./PhoneCard";
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom'
+import TextField from '@mui/material/TextField'
+
 
 
 const PhoneList = (props) => {
   console.log(props);
+  const inputEl = useRef("");
 
   const deleteConactHandler = (id) => {
     props.getContactId(id);
@@ -21,6 +24,11 @@ const PhoneList = (props) => {
       />
     );
   });
+
+  const getSearchTerm = ()=> {
+    props.searchKeyword(inputEl.current.value);
+
+  };
   return (
     <div className="ui celled list">
      <Box
@@ -39,9 +47,20 @@ const PhoneList = (props) => {
         </Button>
         </Link>
       </Box>
-
+      {/* <div className="ui search">
+        <div className="ui icon input">
+          <input type="text" placeholder="Search Contacts" className="prompt" />        
+          <i className="Search icon"></i>
+        </div>
+      </div> */}
+      <TextField      
+        inputRef={inputEl}
+        label="search"
+        value={props.term}
+        onChange={ getSearchTerm }        
+      />
     
-      {renderPhoneList}
+      {renderPhoneList.length > 0 ? renderPhoneList : 'No Contacts avilable'}
     </div>
     );
 };
