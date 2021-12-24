@@ -16,7 +16,8 @@ function App() {
 
   // RetrieveContacts 
   const retrieveContacts = async () => {
-    const response = await api.get("/contacts");
+    //const response = await api.get("/contacts");
+    const response = await api.get("/users");
     return response.data;
   };
 
@@ -27,12 +28,12 @@ function App() {
       ...contact
     }
 
-    const response = await api.post("/contacts", request)
-    setContacts([...contacts, response.data]);
+    const response = await api.post("/users", request)
+    setContacts([response.data, ...contacts]);
   };
 
   const updateContactHandler = async (contact) => {
-    const response = await api.put(`/contacts/${contact.id}`, contact);
+    const response = await api.put(`/users/${contact.id}`, contact);
     // const {id, name, phone} = response.data;
     const {id} = response.data;
     setContacts(
@@ -43,7 +44,7 @@ function App() {
   }
 
   const removeContactHanler = async (id) => {
-    await api.delete(`/contacts/${id}`);
+    await api.delete(`/users/${id}`);
     const newContactList = contacts.filter((contact) => {
       return contact.id !== id;
     });
