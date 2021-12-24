@@ -1,7 +1,7 @@
 import React from "react";
 import user from "../images/user.png";
 
-const PhoneDetail = (props) => {
+const ContactDetail = (props) => {
   const {name, phone} = props.location.state.contact;
   return (
     <div className="main">
@@ -17,4 +17,4 @@ const PhoneDetail = (props) => {
     </div>
   );
 };
-export default PhoneDetail;
+export default ContactDetail;

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import PhoneCard from "./PhoneCard";
+import ContactCard from "./ContactCard";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
@@ -8,16 +8,16 @@ import Container from "@mui/material/Container";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
 
-const PhoneList = (props) => {
+const ContactList = (props) => {
   console.log(props);
   const inputEl = useRef("");
 
   const deleteConactHandler = (id) => {
     props.getContactId(id);
   };
-  const renderPhoneList = props.contacts.map((contact) => {
+  const renderContactList = props.contacts.map((contact) => {
     return (
-      <PhoneCard
+      <ContactCard
         contact={contact}
         clickHander={deleteConactHandler}
         key={contact.id}
@@ -29,7 +29,7 @@ const PhoneList = (props) => {
     props.searchKeyword(inputEl.current.value);
   };
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="lg">
       <Box
         sx={{
           display: "flex",
@@ -48,12 +48,6 @@ const PhoneList = (props) => {
           </Tooltip>
         </Link>
       </Box>
-      {/* <div className="ui search">
-        <div className="ui icon input">
-          <input type="text" placeholder="Search Contacts" className="prompt" />        
-          <i className="Search icon"></i>
-        </div>
-      </div> */}
       <TextField
         fullWidth
         inputRef={inputEl}
@@ -62,27 +56,9 @@ const PhoneList = (props) => {
         onChange={getSearchTerm}
       />
 
-      {renderPhoneList.length > 0 ? renderPhoneList : "No Contacts avilable"}
+      {renderContactList.length > 0 ? renderContactList : "No Contacts avilable"}
     </Container>
   );
 };
 
-export default PhoneList;
-
-// import * as React from 'react';
-// import List from '@mui/material/List';
-// import PhoneCard from './PhoneCard';
-
-// const PhoneList = (props) => {
-
-//       const renderPhoneList = props.contacts.map((contact) => {
-//             return <PhoneCard contact={contact} key={contact.id}/>;
-//     })
-//     return (
-//         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-//                 {renderPhoneList}
-//         </List>
-//     );
-// }
-
-// export default PhoneList;
+export default ContactList;

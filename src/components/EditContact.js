@@ -1,26 +1,32 @@
 import React from "react";
+import Container from "@mui/material/Container";
 
-class AddPhone extends React.Component {
-  state = {
-    name: "",
-    phone: "",
-  };
+class EditContact extends React.Component {
+  constructor(props){
+    super(props)
+    const {id, name, phone} = props.location.state.contact;
+    this.state = {
+      id,
+      name,
+      phone,
+    };
+  }
 
-  add = (e) => {
+  update = (e) => {
     e.preventDefault();
     if (this.state.name === "" || this.state.phone === "") {
       alert("ALl the fields are mandatory!");
       return;
     }
-    this.props.addContactHandler(this.state);
+    this.props.updateContactHandler(this.state);
     this.setState({ name: "", phone: "" });
     this.props.history.push("/");
   };
   render() {
     return (
-      <div className="ui main">
-        <h2>Add Contact</h2>
-        <form className="ui form" onSubmit={this.add}>
+      <Container maxWidth="md">
+        <h2>Edit Contact</h2>
+        <form className="ui form" onSubmit={this.update}>
           <div className="field">
             <label>Name</label>
             <input
@@ -41,11 +47,12 @@ class AddPhone extends React.Component {
               onChange={(e) => this.setState({ phone: e.target.value })}
             />
           </div>
-          <button className="ui button blue">Add</button>
+          <button className="ui button blue">Update</button>
         </form>
-      </div>
+      </Container>
+
     );
   }
 }
 
-export default AddPhone;
+export default EditContact;

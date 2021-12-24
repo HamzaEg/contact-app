@@ -4,11 +4,11 @@ import { v4 as uuid } from "uuid";
 import api from "../api/contacts";
 import "./App.css";
 import AppBar from "./AppBar";
-import AddPhone from "./AddPhone";
-import EditPhone from "./EditPhone";
-import PhoneList from "./PhoneList";
+import AddContact from "./AddContact";
+import EditContact from "./EditContact";
+import ContactList from "./ContactList";
 import Box from "@mui/material/Box";
-import PhoneDetail from "./PhoneDetail";
+import ContactDetail from "./ContactDetail";
 
 function App() {
   // const LOCAL_STORAGE_KEY = "contacts";
@@ -97,7 +97,7 @@ function App() {
               path="/"
               exact
               render={(props) => (
-                <PhoneList
+                <ContactList
                   {...props}
                   contacts={searchTerm.length < 1 ? contacts : searchResults}
                   getContactId={removeContactHanler}
@@ -109,22 +109,22 @@ function App() {
             <Route
               path="/add"
               render={(props) => (
-                <AddPhone {...props} addContactHandler={addContactHandler} />
+                <AddContact {...props} addContactHandler={addContactHandler} />
               )}
             />
             <Route
               path="/edit"
               render={(props) => (
-                <EditPhone
+                <EditContact
                   {...props}
                   updateContactHandler={updateContactHandler}
                 />
               )}
             />
-            <Route path="/phone/:id" component={PhoneDetail} />
+            <Route path="/phone/:id" component={ContactDetail} />
           </Switch>
-          {/* <AddPhone addContactHandler={addContactHandler} /> */}
-          {/* <PhoneList contacts={contacts} getContactId={removeContactHanler}/> */}
+          {/* <AddContact addContactHandler={addContactHandler} /> */}
+          {/* <ContactList contacts={contacts} getContactId={removeContactHanler}/> */}
         </Box>
       </Router>
     </Box>
