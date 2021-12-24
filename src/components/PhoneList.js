@@ -1,12 +1,13 @@
-import React, { useRef} from "react";
+import React, { useRef } from "react";
 import PhoneCard from "./PhoneCard";
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom'
-import TextField from '@mui/material/TextField'
-
-
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Container from "@mui/material/Container";
+import AddIcon from "@mui/icons-material/Add";
+import Tooltip from "@mui/material/Tooltip";
 
 const PhoneList = (props) => {
   console.log(props);
@@ -25,26 +26,27 @@ const PhoneList = (props) => {
     );
   });
 
-  const getSearchTerm = ()=> {
+  const getSearchTerm = () => {
     props.searchKeyword(inputEl.current.value);
-
   };
   return (
-    <div className="ui celled list">
-     <Box
+    <Container maxWidth="sm">
+      <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
+          display: "flex",
+          justifyContent: "space-between",
           p: 1,
           m: 1,
-          bgcolor: 'background.paper',
+          bgcolor: "background.paper",
         }}
       >
-        <Typography variant="h2" color="initial">Phone List</Typography>
+        <Typography variant="h4" color="initial">
+          Telefonliste
+        </Typography>
         <Link to="/add">
-        <Button  variant="contained">
-          Add Phone
-        </Button>
+          <Tooltip title="Telefon hinzufügen">
+            <AddIcon color="primary" />
+          </Tooltip>
         </Link>
       </Box>
       {/* <div className="ui search">
@@ -53,16 +55,17 @@ const PhoneList = (props) => {
           <i className="Search icon"></i>
         </div>
       </div> */}
-      <TextField      
+      <TextField
+        fullWidth
         inputRef={inputEl}
-        label="search"
+        label="suche"
         value={props.term}
-        onChange={ getSearchTerm }        
+        onChange={getSearchTerm}
       />
-    
-      {renderPhoneList.length > 0 ? renderPhoneList : 'No Contacts avilable'}
-    </div>
-    );
+
+      {renderPhoneList.length > 0 ? renderPhoneList : "No Contacts avilable"}
+    </Container>
+  );
 };
 
 export default PhoneList;
@@ -72,7 +75,7 @@ export default PhoneList;
 // import PhoneCard from './PhoneCard';
 
 // const PhoneList = (props) => {
-    
+
 //       const renderPhoneList = props.contacts.map((contact) => {
 //             return <PhoneCard contact={contact} key={contact.id}/>;
 //     })

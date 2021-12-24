@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import api from "../api/contacts";
 import "./App.css";
-import SearchAppBar from "./SearchAppBar";
+import AppBar from "./AppBar";
 import AddPhone from "./AddPhone";
 import EditPhone from "./EditPhone";
 import PhoneList from "./PhoneList";
@@ -46,11 +46,15 @@ function App() {
   };
 
   const removeContactHanler = async (id) => {
+    
+
     await api.delete(`/users/${id}`);
     const newContactList = contacts.filter((contact) => {
       return contact.id !== id;
     });
     setContacts(newContactList);
+
+
   };
 
   const searchHandler = (searchTerm) => {
@@ -86,7 +90,7 @@ function App() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Router>
-        <SearchAppBar searchKeyword={searchHandler}/>
+        <AppBar />
         <Box sx={{ p: 2 }}>
           <Switch>
             <Route
