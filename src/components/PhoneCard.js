@@ -5,7 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import ImageIcon from "@mui/icons-material/Image";
+import { Phone, DeleteForever, Edit } from "@mui/icons-material";
 // import WorkIcon from '@mui/icons-material/Work';
 // import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 
@@ -15,18 +15,22 @@ const CardPhone = (props) => {
   return (
     <ListItem>
       <ListItemAvatar>
-      <Link to={`/phone/${id}`}>
-        <Avatar>
-          <ImageIcon />
-        </Avatar>
-      </Link>
+        <Link
+          to={{ pathname: `/phone/${id}`, state: { contact: props.contact } }}
+        >
+          <Avatar>
+            <Phone />
+          </Avatar>
+        </Link>
       </ListItemAvatar>
       <ListItemText primary={name} secondary={phone} />
-       <i
-        className="trash alternate outline icon"
-        style={{ color: "red", marginTop: "7px" }}
-        onClick={() => props.clickHander(id)}
-      ></i>
+      <Link
+        to={{ pathname: `/edit`, state: { contact: props.contact } }}
+      >
+        <Edit color="primary"/>
+      </Link>
+
+      <DeleteForever color="error" onClick={() => props.clickHander(id)} />
     </ListItem>
   );
 };
