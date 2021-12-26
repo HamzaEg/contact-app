@@ -49,7 +49,7 @@ function App() {
       return contact.id !== id;
     });
     // reset the contacts array "State" after delete an item.
-    setContacts(newContactList);    
+    setContacts(newContactList);
     setSearchTerm("");
   };
 
@@ -89,9 +89,9 @@ function App() {
         (contact) => contact.name === RandomContact.name
       );
       if (isExist.length === 0) {
-        addContactHandler(RandomContact);
+        return addContactHandler(RandomContact);
       } else {
-        alert(
+        return alert(
           `Bitte versuchen Sie es erneut! ${RandomContact.name} ist schon vorhanden!`
         );
       }
