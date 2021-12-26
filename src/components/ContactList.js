@@ -14,8 +14,12 @@ import SearchOutlined from "@mui/icons-material/SearchOutlined";
 
 
 const ContactList = (props) => {
-  console.log(props);
   const inputEl = useRef("");
+  const title = props.title;
+
+  const smTitle = (title) => {
+    return title.slice(0,3).toUpperCase() + '.';
+  }
 
   const loadJsonFileToApi = () => {
     props.getTestJsonArray();
@@ -38,7 +42,7 @@ const ContactList = (props) => {
     props.searchKeyword(inputEl.current.value);
   };
   return (
-    <Container maxWidth="lg">
+    <Container>
       <Box
         sx={{
           display: "flex",
@@ -48,18 +52,32 @@ const ContactList = (props) => {
           bgcolor: "background.paper",
         }}
       >
-        <Typography variant="h4" color="initial">
-          Telefonliste
+        
+        <Typography 
+        variant="h4" 
+        color="initial"
+        sx={{display: { xs: "none", sm: "none", md: "block", lg: "block", xl: "block" }}}
+        >
+          {title}
         </Typography>
 
-          <Tooltip title="Test Entry From Json">
-          <Button variant="contained" color="primary" onClick={loadJsonFileToApi}>
-            +1 Random            
-          </Button>
+        <Typography 
+        variant="h4" 
+        color="initial"
+        sx={{display: { xs: "block", sm: "block", md: "none", lg: "none", xl: "none"}}}
+        >
+          {smTitle(title)}
+        </Typography>
+
+        <Link to=''>
+        
+          <Tooltip title="Zufälligen Testkontakt hinzufügen">          
+            <AddIcon color="primary" onClick={loadJsonFileToApi}/>   
           </Tooltip>
+        </Link>
         
         <Link to="/add">
-          <Tooltip title="Telefon hinzufügen">
+          <Tooltip title="neue Kontakt anlegen!">
             <AddIcon color="primary" />
           </Tooltip>
         </Link>
@@ -79,7 +97,7 @@ const ContactList = (props) => {
         ),
       }}
       />
-      <Box sx={{p: 8}} >
+      <Box sx={{pt:4}} >
        {renderContactList.length > 0 ? renderContactList : "No Contacts avilable"}
       </Box>
 
