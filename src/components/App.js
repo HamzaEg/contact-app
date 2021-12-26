@@ -40,6 +40,7 @@ function App() {
         return contact.id === id ? { ...response.data } : contact;
       })
     );
+    setSearchTerm("");
   };
 
   const removeContactHanler = async (id) => {
@@ -48,35 +49,25 @@ function App() {
       return contact.id !== id;
     });
     // reset the contacts array "State" after delete an item.
-    setContacts(newContactList);
+    setContacts(newContactList);    
+    setSearchTerm("");
   };
 
   const searchHandler = (searchTerm) => {
     setSearchTerm(searchTerm);
 
     if (searchTerm !== "") {
-      // search just by name and phone attributes!
+      // search by name!
       const newContactList = contacts.filter((obj) => {
-        return (obj.name.toLowerCase() + " " + obj.phone).includes(
-          searchTerm.toLowerCase()
-        );
+        return obj.name.toLowerCase().includes(searchTerm.toLowerCase());
       });
-
-      // search in all attributes 'uuidv4' id also.
-      // const newContactList = contacts.filter((contact) => {
-      //   return Object.values(contact)
-      //     .join(" ")
-      //     .toLowerCase()
-      //     .includes(searchTerm.toLowerCase());
-      // });
-
       setSearchResults(newContactList);
     } else {
       setSearchResults(contacts);
     }
   };
 
-  useEffect(() => {   
+  useEffect(() => {
     const getAllContacts = async () => {
       const allContacts = await retrieveContacts();
       if (allContacts) setContacts(allContacts);
@@ -106,7 +97,6 @@ function App() {
       }
     });
   };
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
