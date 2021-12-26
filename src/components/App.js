@@ -21,40 +21,19 @@ function App() {
     return response.data;
   };
 
-
-
-  const getTestEntryJosnFile = () => {
-    // add one new random record from the json file!
-    const maxLen = Object.values(JSONDATA).length;
-    const randomPosition = Math.floor(Math.random() * maxLen);
-    const arrayOfObj = Object.values(JSONDATA).slice(
-      randomPosition,
-      randomPosition + 1
-    );
-    arrayOfObj.map((e) => {
-      const isExist = contacts.filter((a) => a.name === e.name);
-      if (isExist.length === 0) {
-        addContactHandler(e);
-      } else {
-        alert(`Bitte versuchen Sie es erneut! ${e.name} ist schon vorhanden!`);
-      }
-    });
-  };
-
   const addContactHandler = async (contact) => {
-    console.log(contact);
     const request = {
       id: uuid(),
       ...contact,
     };
 
     const response = await api.post("/contacts", request);
+    // set the new value in the head of the "State" of the contacts array.
     setContacts([response.data, ...contacts]);
   };
 
   const updateContactHandler = async (contact) => {
     const response = await api.put(`/contacts/${contact.id}`, contact);
-    // const {id, name, phone} = response.data;
     const { id } = response.data;
     setContacts(
       contacts.map((contact) => {
@@ -68,6 +47,7 @@ function App() {
     const newContactList = contacts.filter((contact) => {
       return contact.id !== id;
     });
+    // reset the contacts array "State" after delete an item.
     setContacts(newContactList);
   };
 
@@ -82,22 +62,21 @@ function App() {
         );
       });
 
-      // search in all attributes 'uuidv4'
+      // search in all attributes 'uuidv4' id also.
       // const newContactList = contacts.filter((contact) => {
       //   return Object.values(contact)
       //     .join(" ")
       //     .toLowerCase()
       //     .includes(searchTerm.toLowerCase());
       // });
+
       setSearchResults(newContactList);
     } else {
       setSearchResults(contacts);
     }
   };
 
-  useEffect(() => {
-    // const retriveContacts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-    // if (retriveContacts) setContacts(retriveContacts);
+  useEffect(() => {   
     const getAllContacts = async () => {
       const allContacts = await retrieveContacts();
       if (allContacts) setContacts(allContacts);
@@ -105,9 +84,29 @@ function App() {
     getAllContacts();
   }, []);
 
-  // useEffect(() => {
-  //   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
-  // }, [contacts]);
+  // add one new random record from the json file!
+  const getTestEntryJosnFile = () => {
+    const maxLen = Object.values(JSONDATA).length;
+    const randomPosition = Math.floor(Math.random() * maxLen);
+    const arrayOfObj = Object.values(JSONDATA).slice(
+      randomPosition,
+      randomPosition + 1
+    );
+    arrayOfObj.map((RandomContact) => {
+      // check if this new random name exist!
+      const isExist = contacts.filter(
+        (contact) => contact.name === RandomContact.name
+      );
+      if (isExist.length === 0) {
+        addContactHandler(RandomContact);
+      } else {
+        alert(
+          `Bitte versuchen Sie es erneut! ${RandomContact.name} ist schon vorhanden!`
+        );
+      }
+    });
+  };
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -144,7 +143,7 @@ function App() {
                 />
               )}
             />
-            <Route path="/phone/:id" component={ContactDetail} />
+            <Route path="/contact/:id" component={ContactDetail} />
           </Switch>
         </Box>
       </Router>
