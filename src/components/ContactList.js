@@ -3,14 +3,23 @@ import ContactCard from "./ContactCard";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
-import TextField from "@mui/material/TextField";
+import {TextField, IconButton} from "@mui/material";
 import Container from "@mui/material/Container";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
+import Button from '@mui/material/Button'
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+
+
+
 
 const ContactList = (props) => {
   console.log(props);
   const inputEl = useRef("");
+
+  const loadJsonFileToApi = () => {
+    props.getTestJsonArray();
+  }
 
   const deleteConactHandler = (id) => {
     props.getContactId(id);
@@ -42,6 +51,13 @@ const ContactList = (props) => {
         <Typography variant="h4" color="initial">
           Telefonliste
         </Typography>
+
+          <Tooltip title="Test Entry From Json">
+          <Button variant="contained" color="primary" onClick={loadJsonFileToApi}>
+            +1 Random            
+          </Button>
+          </Tooltip>
+        
         <Link to="/add">
           <Tooltip title="Telefon hinzufügen">
             <AddIcon color="primary" />
@@ -49,14 +65,24 @@ const ContactList = (props) => {
         </Link>
       </Box>
       <TextField
+      
         fullWidth
         inputRef={inputEl}
         label="suche"
         value={props.term}
         onChange={getSearchTerm}
+        InputProps={{
+        endAdornment: (
+          <IconButton>
+            <SearchOutlined />
+          </IconButton>
+        ),
+      }}
       />
+      <Box sx={{p: 8}} >
+       {renderContactList.length > 0 ? renderContactList : "No Contacts avilable"}
+      </Box>
 
-      {renderContactList.length > 0 ? renderContactList : "No Contacts avilable"}
     </Container>
   );
 };

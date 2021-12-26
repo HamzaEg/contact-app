@@ -2,25 +2,43 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import api from "../api/contacts";
-import "./App.css";
 import AppBar from "./AppBar";
 import AddContact from "./AddContact";
 import EditContact from "./EditContact";
 import ContactList from "./ContactList";
 import Box from "@mui/material/Box";
 import ContactDetail from "./ContactDetail";
+import JSONDATA from "../json/telefonbuch.json";
 
 function App() {
-  // const LOCAL_STORAGE_KEY = "contacts";
   const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   // RetrieveContacts
   const retrieveContacts = async () => {
-    //const response = await api.get("/contacts");
-    const response = await api.get("/users");
+    const response = await api.get("/contacts");
     return response.data;
+  };
+
+
+
+  const getTestEntryJosnFile = () => {
+    // add one new random record from the json file!
+    const maxLen = Object.values(JSONDATA).length;
+    const randomPosition = Math.floor(Math.random() * maxLen);
+    const arrayOfObj = Object.values(JSONDATA).slice(
+      randomPosition,
+      randomPosition + 1
+    );
+    arrayOfObj.map((e) => {
+      const isExist = contacts.filter((a) => a.name === e.name);
+      if (isExist.length === 0) {
+        addContactHandler(e);
+      } else {
+        alert(`Bitte versuchen Sie es erneut! ${e.name} ist schon vorhanden!`);
+      }
+    });
   };
 
   const addContactHandler = async (contact) => {
@@ -30,12 +48,12 @@ function App() {
       ...contact,
     };
 
-    const response = await api.post("/users", request);
+    const response = await api.post("/contacts", request);
     setContacts([response.data, ...contacts]);
   };
 
   const updateContactHandler = async (contact) => {
-    const response = await api.put(`/users/${contact.id}`, contact);
+    const response = await api.put(`/contacts/${contact.id}`, contact);
     // const {id, name, phone} = response.data;
     const { id } = response.data;
     setContacts(
@@ -46,29 +64,33 @@ function App() {
   };
 
   const removeContactHanler = async (id) => {
-    
-
-    await api.delete(`/users/${id}`);
+    await api.delete(`/contacts/${id}`);
     const newContactList = contacts.filter((contact) => {
       return contact.id !== id;
     });
     setContacts(newContactList);
-
-
   };
 
   const searchHandler = (searchTerm) => {
     setSearchTerm(searchTerm);
+
     if (searchTerm !== "") {
-      const newContactList = contacts.filter((contact) => {
-        return Object.values(contact)
-          .join(" ")
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
+      // search just by name and phone attributes!
+      const newContactList = contacts.filter((obj) => {
+        return (obj.name.toLowerCase() + " " + obj.phone).includes(
+          searchTerm.toLowerCase()
+        );
       });
+
+      // search in all attributes 'uuidv4'
+      // const newContactList = contacts.filter((contact) => {
+      //   return Object.values(contact)
+      //     .join(" ")
+      //     .toLowerCase()
+      //     .includes(searchTerm.toLowerCase());
+      // });
       setSearchResults(newContactList);
-    }
-    else {
+    } else {
       setSearchResults(contacts);
     }
   };
@@ -83,9 +105,9 @@ function App() {
     getAllContacts();
   }, []);
 
-  useEffect(() => {
-    // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
+  // }, [contacts]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -101,6 +123,7 @@ function App() {
                   {...props}
                   contacts={searchTerm.length < 1 ? contacts : searchResults}
                   getContactId={removeContactHanler}
+                  getTestJsonArray={getTestEntryJosnFile}
                   term={searchTerm}
                   searchKeyword={searchHandler}
                 />
@@ -123,8 +146,6 @@ function App() {
             />
             <Route path="/phone/:id" component={ContactDetail} />
           </Switch>
-          {/* <AddContact addContactHandler={addContactHandler} /> */}
-          {/* <ContactList contacts={contacts} getContactId={removeContactHanler}/> */}
         </Box>
       </Router>
     </Box>
