@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import api from "../api/contacts";
-import AppBar from "./AppBar";
-import AddContact from "./AddContact";
-import EditContact from "./EditContact";
-import ContactList from "./ContactList";
+import api from "./api/contacts";
+import AppBar from "./components/AppBar";
+import AddContact from "./components/AddContact";
+import EditContact from "./components/EditContact";
+import ContactList from "./components/ContactList";
 import Box from "@mui/material/Box";
-import ContactDetail from "./ContactDetail";
-import JSONDATA from "../json/telefonbuch.json";
+import ContactDetail from "./components/ContactDetail";
+import JSONDATA from "./json/telefonbuch.json";
 
 function App() {
   const [contacts, setContacts] = useState([]);
