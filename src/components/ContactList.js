@@ -7,7 +7,6 @@ import {TextField, IconButton} from "@mui/material";
 import Container from "@mui/material/Container";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
-import Button from '@mui/material/Button'
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 
 
@@ -15,7 +14,8 @@ import SearchOutlined from "@mui/icons-material/SearchOutlined";
 
 const ContactList = (props) => {
   const inputEl = useRef("");
-  const title = props.title;
+  
+  const ContactListTitle = "Telefonliste";
 
   const smTitle = (title) => {
     return title.slice(0,3).toUpperCase() + '.';
@@ -53,20 +53,20 @@ const ContactList = (props) => {
         }}
       >
         
-        <Typography 
-        variant="h4" 
+        <Typography // show full title, only when the screen 'md' or larger //
+        variant="h5" 
         color="initial"
         sx={{display: { xs: "none", sm: "none", md: "block", lg: "block", xl: "block" }}}
         >
-          {title}
+          {ContactListTitle}
         </Typography>
 
-        <Typography 
-        variant="h4" 
+        <Typography // show acronym title, only when the screen 'xs' or 'sm'  //
+        variant="h5" 
         color="initial"
         sx={{display: { xs: "block", sm: "block", md: "none", lg: "none", xl: "none"}}}
         >
-          {smTitle(title)}
+          {smTitle(ContactListTitle)}
         </Typography>
 
         <Link to=''>

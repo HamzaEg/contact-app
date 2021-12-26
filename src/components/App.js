@@ -14,7 +14,6 @@ function App() {
   const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [contactListTitle, setContactListTitle] = useState("Telefonliste");
 
   // RetrieveContacts
   const retrieveContacts = async () => {
@@ -111,7 +110,6 @@ function App() {
               render={(props) => (
                 <ContactList
                   {...props}   
-                  title={contactListTitle}               
                   contacts={searchTerm.length < 1 ? contacts : searchResults}
                   getContactId={removeContactHanler}
                   getTestJsonArray={getTestEntryJosnFile}
