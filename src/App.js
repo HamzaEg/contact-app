@@ -30,6 +30,7 @@ function App() {
     const response = await api.post("/contacts", request);
     // set the new value in the head of the "State" of the contacts array.
     setContacts([response.data, ...contacts]);
+    setSearchTerm("");
   };
 
   const updateContactHandler = async (contact) => {
