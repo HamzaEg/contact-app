@@ -22,9 +22,11 @@ const CardContact = (props) => {
         </Link>
       </ListItemAvatar>
       <ListItemText primary={name} secondary={phone} />
-      <Link to={{ pathname: `/edit`, state: { contact: props.contact } }}>
+      <Link to={{ pathname: `/edit`, state: { contact: props.contact }}}>
         <Tooltip title="bearbeiten">
+        <IconButton>
           <Edit color="primary" />
+        </IconButton>
         </Tooltip>
       </Link>
 

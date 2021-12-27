@@ -1,20 +1,33 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import user from "../images/user.png";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const ContactDetail = (props) => {
-  const {name, phone} = props.location.state.contact;
+  const { name, phone } = props.location.state.contact;
   return (
-    <div className="main">
-      <div className="ui card centered">
-        <div className="image">
-          <img src={user} alt="user" />
-        </div>
-        <div className="content">
-          <div className="header">{name}</div>
-          <div className="description">{phone}</div>          
-        </div>
-      </div>
-    </div>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia component="img" alt="green iguana" height="240" image={user} />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {name}
+        </Typography>
+
+        <Typography variant="body2" color="text.secondary">
+          {phone}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Link to="/">
+          <Button size="small">zurück</Button>
+        </Link>
+      </CardActions>
+    </Card>
   );
 };
 export default ContactDetail;

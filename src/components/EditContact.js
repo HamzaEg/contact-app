@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "@mui/material/Container";
+import { Container, Typography, Box, TextField, Button } from "@mui/material";
 
 class EditContact extends React.Component {
   constructor(props){
@@ -24,33 +24,36 @@ class EditContact extends React.Component {
   };
   render() {
     return (
-      <Container maxWidth="md">
-        <h2>Kontakt bearbeiten</h2>
-        <form className="ui form" onSubmit={this.update}>
-          <div className="field">
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={this.state.name}
-              onChange={(e) => this.setState({ name: e.target.value })}
-            />
-          </div>
-          <div className="field">
-            <label>Telefon</label>
-            <input
-              type="text"
-              name="phone"
-              placeholder="Phone"
-              value={this.state.phone}
-              onChange={(e) => this.setState({ phone: e.target.value })}
-            />
-          </div>
-          <button className="ui button blue">Aktualisieren</button>
-        </form>
+           <Container maxWidth="md" >
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTypography-root": { m: 2 },
+            "& .MuiTextField-root": { m: 1 },
+            "& .MuiButton-root": { m: 2 },
+          }}
+          autoComplete="off"
+        >
+          <Typography variant="h4" color="initial">
+            Kontakt bearbeiten
+          </Typography>
+          <TextField
+            fullWidth
+            label="Name"
+            value={this.state.name}
+            onChange={(e) => this.setState({ name: e.target.value })}
+          />
+          <TextField
+            fullWidth
+            label="Telefon"
+            value={this.state.phone}
+            onChange={(e) => this.setState({ phone: e.target.value })}
+          />
+          <Button variant="contained" color="primary" onClick={this.update}>
+            Aktualisieren
+          </Button>
+        </Box>
       </Container>
-
     );
   }
 }

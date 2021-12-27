@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export default axios.create({
-    // server-api with "contacts" resource as Array is requird!
+    // server-api with an empty Array of "contacts", should be available!
     baseURL:"http://localhost:3030/",
 })

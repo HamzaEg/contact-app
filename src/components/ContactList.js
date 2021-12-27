@@ -2,13 +2,13 @@ import React, { useRef } from "react";
 import ContactCard from "./ContactCard";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
 import {TextField, IconButton} from "@mui/material";
 import Container from "@mui/material/Container";
-import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
+import { Link } from "react-router-dom";
+import ContactPhone from "@mui/icons-material/ContactPhone";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-
+ 
 
 
 
@@ -41,6 +41,8 @@ const ContactList = (props) => {
   const getSearchTerm = () => {
     props.searchKeyword(inputEl.current.value);
   };
+
+
   return (
     <Container>
       <Box
@@ -72,13 +74,13 @@ const ContactList = (props) => {
         <Link to=''>
         
           <Tooltip title="Zufälligen Testkontakt hinzufügen">          
-            <AddIcon color="primary" onClick={loadJsonFileToApi}/>   
+            <ContactPhone fontSize="large" color="secondary" onClick={loadJsonFileToApi}/>   
           </Tooltip>
         </Link>
         
         <Link to="/add">
           <Tooltip title="neue Kontakt anlegen!">
-            <AddIcon color="primary" />
+            <ContactPhone fontSize="large" color="primary" />
           </Tooltip>
         </Link>
       </Box>
