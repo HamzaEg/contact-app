@@ -11,25 +11,40 @@ import ContactDetail from "./components/ContactDetail";
 import JSONDATA from "./json/telefonbuch.json";
 
 function App() {
+  const LOCAL_STORAGE_KEY = "contacts";
+  const [useResource, setUseResource] = useState('localStorage');
+
   const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  
+
+
 
   // RetrieveContacts
   const retrieveContacts = async () => {
-    const response = await api.get("/contacts");
-    return response.data;
+    if (useResource === 'LocalStorage') {
+
+    }else if (useResource === 'server-json-api') {
+      const response = await api.get("/contacts");
+      return response.data;
+    }
+    
   };
 
   const addContactHandler = async (contact) => {
-    const request = {
-      id: uuid(),
-      ...contact,
-    };
-
-    const response = await api.post("/contacts", request);
-    // set the new value in the head of the "State" of the contacts array.
-    setContacts([response.data, ...contacts]);
+    if (useResource === 'LocalStorage') {
+      console.log(contact);
+      setContacts([{ id: uuid(), ...contact }, ...contacts]);
+    }else{
+      const request = {
+        id: uuid(),
+        ...contact,
+      };
+      const response = await api.post("/contacts", request);
+      // set the new value in the head of the "State" of the contacts array.
+      setContacts([response.data, ...contacts]);
+    }
     setSearchTerm("");
   };
 
@@ -45,13 +60,23 @@ function App() {
   };
 
   const removeContactHanler = async (id) => {
-    await api.delete(`/contacts/${id}`);
-    const newContactList = contacts.filter((contact) => {
+    if (useResource === 'LocalStorage') {
+      console.log(useResource);
+      const newContactList = contacts.filter((contact) => {
       return contact.id !== id;
-    });
-    // reset the contacts array "State" after delete an item.
-    setContacts(newContactList);
+      });
+      setContacts(newContactList);      
+    }else if (useResource === 'server-json-api') {
+      console.log(useResource);
+      await api.delete(`/contacts/${id}`);
+      const newContactList = contacts.filter((contact) => {
+        return contact.id !== id;
+      });
+      setContacts(newContactList);
+    }
+
     setSearchTerm("");
+
   };
 
   const searchHandler = (searchTerm) => {
@@ -69,12 +94,22 @@ function App() {
   };
 
   useEffect(() => {
-    const getAllContacts = async () => {
-      const allContacts = await retrieveContacts();
-      if (allContacts) setContacts(allContacts);
-    };
-    getAllContacts();
+    if (useResource === 'LocalStorage') {
+      const retriveContacts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+      if (retriveContacts) setContacts(retriveContacts);      
+    }else if (useResource === 'server-json-api') {
+      const getAllContacts = async () => {
+        const allContacts = await retrieveContacts();
+        if (allContacts) setContacts(allContacts);
+      };
+      getAllContacts();
+    }
+
   }, []);
+
+    useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
+    }, [contacts]);
 
   // add one new random record from the json file!
   const getTestEntryJosnFile = () => {
@@ -89,7 +124,7 @@ function App() {
       const isExist = contacts.filter(
         (contact) => contact.name === RandomContact.name
       );
-      if (isExist.length === 0) {
+      if (isExist.length === 'LocalStorage') {
         return addContactHandler(RandomContact);
       } else {
         return alert(
@@ -99,10 +134,19 @@ function App() {
     });
   };
 
+  const selectResource = async (resource) => {
+    console.log(resource);
+    console.log(useResource);    
+    setUseResource(resource);
+    console.log(useResource);
+    
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Router>
-        <AppBar />
+        <AppBar isResource={useResource}  toggleResource={selectResource} />
+        {useResource}
         <Box sx={{ p: 2 }}>
           <Switch>
             <Route
