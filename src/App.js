@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import api from "./api/contacts";
+import api from "./api/users";
 import AppBar from "./components/AppBar";
 import AddContact from "./components/AddContact";
 import EditContact from "./components/EditContact";
@@ -17,7 +17,7 @@ function App() {
 
   // RetrieveContacts
   const retrieveContacts = async () => {
-    const response = await api.get("/contacts");
+    const response = await api.get("/users");
     return response.data;
   };
 
@@ -27,14 +27,14 @@ function App() {
       ...contact,
     };
 
-    const response = await api.post("/contacts", request);
+    const response = await api.post("/users", request);
     // set the new value in the head of the "State" of the contacts array.
     setContacts([response.data, ...contacts]);
     setSearchTerm("");
   };
 
   const updateContactHandler = async (contact) => {
-    const response = await api.put(`/contacts/${contact.id}`, contact);
+    const response = await api.put(`/users/${contact.id}`, contact);
     const { id } = response.data;
     setContacts(
       contacts.map((contact) => {
@@ -45,7 +45,7 @@ function App() {
   };
 
   const removeContactHanler = async (id) => {
-    await api.delete(`/contacts/${id}`);
+    await api.delete(`/users/${id}`);
     const newContactList = contacts.filter((contact) => {
       return contact.id !== id;
     });
