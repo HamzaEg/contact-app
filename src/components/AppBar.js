@@ -12,11 +12,11 @@ export default function DenseAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar variant="dense">
-        <Link to='www.egnaidi.xyz'>
-          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+
+          <IconButton href="http://egnaidi.xyz/" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <Engineering sx={{color:"white"}}/>
           </IconButton>
-        </Link>
+
         <Link to={'/'}>
           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <Home sx={{color:"white"}}/>
